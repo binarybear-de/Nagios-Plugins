@@ -5,6 +5,7 @@ This is a bash script that runs on my nagios server and goes out to my UniFi Vid
 It depends on the small 'jq' package, which is readily available. See https://stedolan.github.io/jq/ for more information.
 
 Once jq is installed, you can run this script by changing "yourserver:yourport" in the shell script to match your UniFi video server. 
+You'll also need to generate an API key in your UniFi Video Server that you replace in the curl url of the script.
 You may also want to change the warning and critical thresholds to something more appropriate to your environment. 
 
 I've also included a sample service check command, which you have to add into Nagios with the device's MAC address to actually call the API. Hopefully that makes sense.
