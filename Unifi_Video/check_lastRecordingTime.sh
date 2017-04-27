@@ -1,14 +1,13 @@
 #!/bin/bash
 
-######Written by Brayden Santo for Nagios to check the last recording time of videos cameras.
-######This script uses JSON parsing to pull a single variable from the Unifi Video system through the Admin API.
-######It depends on the small 'jq' parsing package, so you'll need to install that first.
+###### Written by Brayden Santo for Nagios to check the last recording time of videos cameras.
+###### This script uses JSON parsing to pull a single variable from the Unifi Video system through the Admin API.
+###### It depends on the small 'jq' parsing package, so you'll need to install that first.
 
-######Instructions:
+###### Instructions:
 ###### Change the warning and critical values to match what your environment requires
 ###### Change the address of the curl address to be the address of your UniFi Video camera system
 ###### Generate an API key in your UniFi Video System and put it in the curl URL below
-
 
 #####Variable Init
 cameraMAC=$1
@@ -17,11 +16,7 @@ cameraLastRecordingStartTime=$()
 warningValue=$(date -d '-48 hours' '+%s')   #Epoch time for no recording in the last 48 hours
 criticalValue=$(date -d '-96 hours' '+%s')  #Epoch time for no recording in the last 96 hours
 
-#####Ask the user for the MAC of the cameras
-#echo 'Address for camera is '$cameraMAC
-
 #####Curl the URL to get the epoch time data and camera name
-#echo 'Gathering camera data'
 cameraName=$(curl -s "http://<yourserver>:<yourport>/api/2.0/camera?apiKey=<yourAPIkey>&mac=${cameraMAC}" | jq '.data[].name')
 cameraLastRecordingStartTime=$(curl -s "http://<yourserver>:<yourport>/api/2.0/camera?apiKey=<yourAPIkey>&mac=${cameraMAC}" | jq '.data[].lastRecordingStartTime')
 
@@ -30,11 +25,6 @@ lastRecordingEpochTimeInSeconds=$(expr $cameraLastRecordingStartTime / 1000)
 
 ######Compare time to decide to flag in Nagios
 humanTime=$(date -d @"$lastRecordingEpochTimeInSeconds")
-#echo $humanTime 'was the last recording date'
-
-#echo $criticalValue 'is the critical value'
-#echo $warningValue 'is the warning value'
-#echo $lastRecordingEpochTimeInSeconds 'is the test variable'
 
 ######If last recording time more than critical time, flag and out as critcal with name and last recording time
 if [ "$lastRecordingEpochTimeInSeconds" -lt "$criticalValue" ]
