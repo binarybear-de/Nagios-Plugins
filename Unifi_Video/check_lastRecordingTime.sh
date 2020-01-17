@@ -17,8 +17,8 @@ warningValue=$(date -d '-48 hours' '+%s')   #Epoch time for no recording in the 
 criticalValue=$(date -d '-96 hours' '+%s')  #Epoch time for no recording in the last 96 hours
 
 #####Curl the URL to get the epoch time data and camera name
-cameraName=$(curl -s "http://<yourserver>:<yourport>/api/2.0/camera?apiKey=<yourAPIkey>&mac=${cameraMAC}" | jq '.data[].name')
-cameraLastRecordingStartTime=$(curl -s "http://<yourserver>:<yourport>/api/2.0/camera?apiKey=<yourAPIkey>&mac=${cameraMAC}" | jq '.data[].lastRecordingStartTime')
+cameraName=$(curl -k -s "http://<yourserver>:<yourport>/api/2.0/camera?apiKey=<yourAPIkey>&mac=${cameraMAC}" | jq '.data[].name')
+cameraLastRecordingStartTime=$(curl -k -s "http://<yourserver>:<yourport>/api/2.0/camera?apiKey=<yourAPIkey>&mac=${cameraMAC}" | jq '.data[].lastRecordingStartTime')
 
 #####Divide the time data by 1000 to get accurate human time
 lastRecordingEpochTimeInSeconds=$(expr $cameraLastRecordingStartTime / 1000)
