@@ -15,10 +15,11 @@ cameraMAC=$2
 apiKEY=$3
 fullURI="https://${cameraURI}:7443/api/2.0/camera?apiKey=${apiKEY}&mac=${cameraMAC}"
 jq="/usr/local/nagios/bin/jq"
+
 cameraName=$()
 cameraLastRecordingStartTime=$()
-warningValue=$(date -d '-48 hours' '+%s')   #Epoch time for no recording in the last 48 hours
-criticalValue=$(date -d '-96 hours' '+%s')  #Epoch time for no recording in the last 96 hours
+warningValue=$(date -d '-24 hours' '+%s')   #Epoch time for no recording in the last 48 hours
+criticalValue=$(date -d '-48 hours' '+%s')  #Epoch time for no recording in the last 96 hours
 
 #####Curl the URL to get the epoch time data and camera name
 cameraName=$(curl -k -s "${fullURI}" | ${jq} '.data[].name')
@@ -33,13 +34,13 @@ humanTime=$(date -d @"$lastRecordingEpochTimeInSeconds")
 ######If last recording time more than critical time, flag and out as critcal with name and last recording time
 if [ "$lastRecordingEpochTimeInSeconds" -lt "$criticalValue" ]
 then
-echo 'Last Recording: '$humanTime 'on' $cameraName 'is more than 96 hours ago'
+echo 'Last Recording: '$humanTime 'on' $cameraName 'is more than 48 hours ago'
 exit 2
 
 ######If last recording time less than critical time, but more than normal time, flag and out as warning with name and last recording time
 elif [ "$lastRecordingEpochTimeInSeconds" -lt "$warningValue" -a "$lastRecordingEpochTimeInSeconds" -gt "$criticalValue" ]
 then
-echo 'Last Recording: '$humanTime 'on' $cameraName 'is more than 48 hours ago but less than 96 hours.'
+echo 'Last Recording: '$humanTime 'on' $cameraName 'is more than 24 hours ago but less than 48 hours.'
 exit 1
 
 ######If okay, out as okay and last recording time
@@ -53,3 +54,4 @@ else
 echo 'Something else happened, script failed.'
 exit 3
 fi
+
