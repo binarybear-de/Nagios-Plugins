@@ -5,7 +5,10 @@
 * Supports multiple cameras (no autodiscovery yet...)
 
 ## What's different?
-This script was forked from https://github.com/chooko/Nagios-Plugins. Main goal was to convert the Nagios script to Check_MK and adding multi-cam support as well. Requests have been reduced to one per camera instead of one per metric.
+This script was forked from https://github.com/chooko/Nagios-Plugins.
+* adapted the Nagios script to Check_MK
+* added multi-cam support
+* reduced Requests to one per camera instead of one per metric per camera.
 
 ## Requirements 
 * UniFi Video NVR (tested on Debian 9.12, UniFi-Video 3.10.11)
