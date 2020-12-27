@@ -2,9 +2,9 @@
 # script to list all UniFi Video cameras from the given controller and get some infos
 # https://github.com/binarybear-de/cmk_check_unifi-video
 
-ADDRESS=10.234.3.3:7443
-MAC_LIST=( F09FC2C0FE2B B4FBE4FF4665 )
-API_KEY="lkGksS3KktDATB8gelgcRG3RP6acltFQ"
+ADDRESS=127.0.0.1:7443
+MAC_LIST=( F09FC2C0FE2B B4FBE4FF4665 ) #put your mac addresses here!
+API_KEY="API-key-here"
 
 WARN_HOURS=12
 CRIT_HOURS=24
