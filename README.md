@@ -11,8 +11,8 @@ This script was forked from https://github.com/chooko/Nagios-Plugins.
 * reduced Requests to one per camera instead of one per metric per camera.
 
 ## Requirements 
-* UniFi Video NVR (tested on Debian 9.12, UniFi-Video 3.10.11)
-* Check_MK Agent (Tested on 1.6.0p12)
+* UniFi Video NVR (tested with UniFi-Video 3.10.11)
+* Check_MK Agent
 * Package jq installed (```apt install jq```)
 
 ## Installation
