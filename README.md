@@ -30,7 +30,7 @@ apt install jq curl wget -y \
 ### updating
 ```
 CMK_LOCAL=/usr/lib/check_mk_agent/local/check_unifi-video.sh \
-&& https://raw.githubusercontent.com/binarybear-de/cmk_check_unifi-video/master/check_unifi-video.sh -O $CMK_LOCAL \
+&& wget https://raw.githubusercontent.com/binarybear-de/cmk_check_unifi-video/master/check_unifi-video.sh -O $CMK_LOCAL \
 && chmod +x $CMK_LOCAL \
 && unset CMK_LOCAL
 ```
