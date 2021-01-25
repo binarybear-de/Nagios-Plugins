@@ -19,7 +19,7 @@ The I-am-lazy-just-install method: Just copy-paste the whole block in the shell 
 apt install jq curl wget -y \
 && CMK_LOCAL=/usr/lib/check_mk_agent/local/check_unifi-video.sh \
 && CMK_CONFIG=/etc/check_mk/unifi-nvr.cfg \
-&& https://raw.githubusercontent.com/binarybear-de/cmk_check_unifi-video/master/check_unifi-video.sh -O $CMK_LOCAL \
+&& wget https://raw.githubusercontent.com/binarybear-de/cmk_check_unifi-video/master/check_unifi-video.sh -O $CMK_LOCAL \
 && chmod +x $CMK_LOCAL \
 && wget https://raw.githubusercontent.com/binarybear-de/cmk_check_unifi-video/master/unifi-nvr.cfg -O $CMK_CONFIG \
 && chmod 700 $CMK_CONFIG \
