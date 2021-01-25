@@ -1,17 +1,23 @@
 #!/bin/bash
 # script to list all UniFi Video cameras from the given controller and get some infos
 # https://github.com/binarybear-de/cmk_check_unifi-video
-
-ADDRESS=127.0.0.1:7443
-MAC_LIST=( F09FC2C0FE2B B4FBE4FF4665 ) #put your mac addresses here!
-API_KEY="API-key-here"
-
-WARN_HOURS=12
-CRIT_HOURS=24
+SCRIPTBUILD="BUILD 2021-01-24"
 
 ###############################################################
-# you should not need to edit anything below here!
+# you should not need to edit anything here - use the config file!
 ###############################################################
+
+CONFIG_FILE=/etc/check_mk/unifi-nvr.cfg
+CONFIG_ACCESS=$(stat -c %a $CONFIG_FILE)
+CONFIG_OWNER=$(stat -c %U $CONFIG_FILE)
+
+if [ ! $CONFIG_ACCESS = 700 ] || [ ! $CONFIG_OWNER = root ] ; then
+	echo "Config permission mismatch, must be 700 with owner root (current: $CONFIG_ACCESS, owner $CONFIG_OWNER)!"
+	exit 1
+fi
+
+# source the settings from file
+. $CONFIG_FILE
 
 #Translate thresholds in seconds
 WARN=$(date -d "-$WARN_HOURS hours" '+%s')
@@ -37,7 +43,6 @@ for mac in "${MAC_LIST[@]}"; do
 	CAM_NAME=$(getDeviceInfo name)
 	CAM_LAST_REC=$(expr $(getDeviceInfo lastRecordingStartTime) / 1000)
 	CAM_LAST_REC_HUMAN=$(date -d @"$CAM_LAST_REC")
-
 	CAM_STATE=$(getDeviceInfo state)
 
 	# Longer ago than CRIT
